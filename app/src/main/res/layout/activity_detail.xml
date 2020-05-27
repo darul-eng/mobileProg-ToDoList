@@ -7,7 +7,7 @@
     tools:context=".detail.DetailActivity">
 
     <EditText
-        android:id="@+id/etNama"
+        android:id="@+id/etTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -36,7 +36,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNama" />
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
 
     <Button
         android:id="@+id/btnSave"

@@ -1,8 +1,7 @@
 package com.Final.todolist.detail;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -15,8 +14,9 @@ import android.widget.EditText;
 import com.Final.todolist.R;
 import com.Final.todolist.ViewModelFactory;
 import com.Final.todolist.data.Note;
+import com.Final.todolist.utils.DateHelper;
 
-public class DetailActivity extends AppCompatActivity {
+public class    DetailActivity extends AppCompatActivity {
 
     private boolean isEdit = false;
     public static final String DATA_DETAIL = "data_detail";
@@ -24,7 +24,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private Button btnSave;
 
-    private EditText etNama, etDesc;
+    private EditText etTitle, etDesc;
     private DetailViewModel detailViewModel;
 
     private Note note;
@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
 
         btnSave = findViewById(R.id.btnSave);
 
-        etNama = findViewById(R.id.etNama);
+        etTitle = findViewById(R.id.etTitle);
         etDesc = findViewById(R.id.etDesc);
 
         detailViewModel = obtainViewModel(DetailActivity.this);
@@ -59,12 +59,35 @@ public class DetailActivity extends AppCompatActivity {
         }else{
             actionBarTitle = "Save";
         }
+
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle(actionBarTitle);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = etTitle.getText().toString().trim();
+                String desc = etDesc.getText().toString().trim();
+
+                if (title.isEmpty()){
+                    etTitle.setError("Please Input Title");
+                }else if (desc.isEmpty()){
+                    etDesc.setError("Please Input Desc");
+                }else {
+                    note.setTitle(title);
+                    note.setDesc(desc);
+
+                    note.setDate(DateHelper.getCurrentDate());
+                    detailViewModel.insert(note);
+                    finish();
+                }
+            }
+        });
     }
 
+    @NonNull
     private static DetailViewModel obtainViewModel(AppCompatActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
@@ -91,6 +114,6 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
                 break;
         }
-        return super.onOptionsItemSelected();
+        return super.onOptionsItemSelected(item);
     }
 }
