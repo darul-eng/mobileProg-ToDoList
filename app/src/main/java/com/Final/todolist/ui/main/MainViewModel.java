@@ -1,4 +1,4 @@
-package com.Final.todolist.main;
+package com.Final.todolist.ui.main;
 
 import android.app.Application;
 
@@ -17,5 +17,7 @@ public class MainViewModel extends ViewModel {
         mNoteRepository = new NoteRepository(application);
     }
 
-    LiveData<List<Note>> getAllNotes(){ return mNoteRepository.getAllNotes();}
+    LiveData<List<Note>> getAllNotes(){
+        return mNoteRepository.getAllNotes();
+    }
 }

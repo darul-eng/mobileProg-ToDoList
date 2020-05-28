@@ -1,4 +1,4 @@
-package com.Final.todolist.detail;
+package com.Final.todolist.ui.detail;
 
 import android.app.Application;
 

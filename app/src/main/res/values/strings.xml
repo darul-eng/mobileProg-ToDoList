@@ -1,11 +1,20 @@
 <resources>
     <string name="app_name">ToDoList</string>
-    <string name="nama">Nama</string>
-    <string name="desc">Desc</string>
-    <string name="save">Save</string>
     <string name="title">Title</string>
+    <string name="desc">Desc</string>
+    <string name="save">Simpan</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="update">Update</string>
     <string name="date">Date</string>
+    <string name="add">Tambah</string>
+    <string name="cancel">cencel</string>
+    <string name="message_cancel">Apakah anda ingin membatalkan perubahan pada form?</string>
+    <string name="message_delete">Apakah anda yakin ingin menghapus item ini?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="added">Satu item berhasil ditambahkan</string>
+    <string name="changed">Satu item berhasil diubah</string>
+    <string name="deleted">Satu item berhasil dihapus</string>
+    <string name="search">Search</string>
 </resources>

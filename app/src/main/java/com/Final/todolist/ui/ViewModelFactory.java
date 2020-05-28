@@ -1,4 +1,4 @@
-package com.Final.todolist;
+package com.Final.todolist.ui;
 
 import android.app.Application;
 
@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.Final.todolist.detail.DetailViewModel;
-import com.Final.todolist.main.MainViewModel;
+import com.Final.todolist.ui.detail.DetailViewModel;
+import com.Final.todolist.ui.main.MainViewModel;
 
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private static volatile ViewModelFactory INSTANCE;

@@ -1,10 +1,12 @@
-package com.Final.todolist.main;
+package com.Final.todolist.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,14 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.Final.todolist.R;
 import com.Final.todolist.data.Note;
-//import com.Final.todolist.ui.insert.NoteUDActivity;
+import com.Final.todolist.ui.detail.DetailActivity;
 import com.Final.todolist.utils.NoteDiffCallback;
-//import com.bagicode.tutorialroom.utils.NoteDiffCallback;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> implements Filterable {
     private final ArrayList<Note> listNotes = new ArrayList<>();
     private final Activity activity;
 
@@ -50,21 +52,54 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.tvTitle.setText(listNotes.get(position).getTitle());
         holder.tvDate.setText(listNotes.get(position).getDate());
         holder.tvDescription.setText(listNotes.get(position).getDesc());
-//        holder.cvNote.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(activity, NoteUDActivity.class);
-//                intent.putExtra(NoteUDActivity.EXTRA_POSITION, holder.getAdapterPosition());
-//                intent.putExtra(NoteUDActivity.EXTRA_NOTE, listNotes.get(holder.getAdapterPosition()));
-//                activity.startActivityForResult(intent, NoteUDActivity.REQUEST_UPDATE);
-//            }
-//        });
+        holder.cvNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, DetailActivity.class);
+                intent.putExtra(DetailActivity.EXTRA_POSITION, holder.getAdapterPosition());
+                intent.putExtra(DetailActivity.EXTRA_NOTE, listNotes.get(holder.getAdapterPosition()));
+                activity.startActivityForResult(intent, DetailActivity.REQUEST_UPDATE);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return listNotes.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            ArrayList<Note> filteredList = new ArrayList<>();
+
+            if(constraint.toString().isEmpty()){
+                filteredList.addAll(listNotes);
+            }else{
+                for (Note note : listNotes){
+                    filteredList.add(note);
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listNotes.clear();
+            listNotes.addAll((Collection<? extends Note>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle, tvDescription, tvDate;
