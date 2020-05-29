@@ -7,6 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = {Note.class}, version = 1)
+
+//untuk membuat database
 public abstract class NoteRoomDatabase extends RoomDatabase {
     public abstract NoteDao noteDao();
 
@@ -17,7 +19,7 @@ public abstract class NoteRoomDatabase extends RoomDatabase {
             synchronized (NoteRoomDatabase.class){
                 if (INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            NoteRoomDatabase.class, "note_database")
+                            NoteRoomDatabase.class, "todo_db")
                             .build();
                 }
             }

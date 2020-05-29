@@ -22,8 +22,10 @@ import com.Final.todolist.utils.DateHelper;
 import com.google.android.material.datepicker.MaterialCalendar;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
-public class    DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
+
+//    inisialisasi inputan
     private EditText etTitle, etDesc;
 
     public static final String EXTRA_NOTE = "extra_note";
@@ -43,33 +45,32 @@ public class    DetailActivity extends AppCompatActivity {
     private Note note;
     private int position;
 
-//    public static final String DATA_DETAIL = "data_detail";
     private String actionBarTitle;
     private String btnTitle;
 
-//    private Button btnSave;
+//  inisialisasi viewModel
     private DetailViewModel detailViewModel;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-//        note = getIntent().getParcelableExtra(DATA_DETAIL);
-//        btnSave = findViewById(R.id.btnSave);
         detailViewModel = obtainViewModel(DetailActivity.this);
 
+//        inisialisasi data
         etTitle = findViewById(R.id.etTitle);
         etDesc = findViewById(R.id.etDesc);
-        Button btnSave = findViewById(R.id.btnSave);
 
+//        inisialisasi button save
+        Button btnSave = findViewById(R.id.btnSave);
+//        mengambil data berdasarkan intent
         note = getIntent().getParcelableExtra(EXTRA_NOTE);
-        if (note != null){
+//        pengkondisian ketika floating action button di tekan,
+        if (note != null){//jika tidak kosong maka lakukan edit,
             position = getIntent().getIntExtra(EXTRA_POSITION, 0);
             isEdit = true;
-        }else{
+        }else{//sebaliknya buat note baru.
             note = new Note();
         }
 
@@ -98,11 +99,11 @@ public class    DetailActivity extends AppCompatActivity {
                 String title = etTitle.getText().toString().trim();
                 String desc = etDesc.getText().toString().trim();
 
-                if (title.isEmpty()){
+                if (title.isEmpty()){//validasi pada form inputan
                     etTitle.setError("Please Input Title");
-                }else if (desc.isEmpty()){
+                }else if (desc.isEmpty()){//validasi pada form inputan
                     etDesc.setError("Please Input Desc");
-                }else {
+                }else {//jika data terisi maka set datanya
                     note.setTitle(title);
                     note.setDesc(desc);
 
@@ -110,11 +111,11 @@ public class    DetailActivity extends AppCompatActivity {
                     intent.putExtra(EXTRA_NOTE, note);
                     intent.putExtra(EXTRA_POSITION, position);
 
-                    if (isEdit){
+                    if (isEdit){//jika edit maka lakukan update
                         detailViewModel.update(note);
                         setResult(RESULT_UPDATE, intent);
                         finish();
-                    }else {
+                    }else {// jika fieldnya kosong lakukan add (add new)
                         note.setDate(DateHelper.getCurrentDate());
                         detailViewModel.insert(note);
                         setResult(RESULT_ADD, intent);
@@ -132,6 +133,7 @@ public class    DetailActivity extends AppCompatActivity {
         return ViewModelProviders.of(activity, factory).get(DetailViewModel.class);
     }
 
+//    fungsi untuk menu delete dan back
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         if (isEdit){
@@ -142,27 +144,26 @@ public class    DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
+            //jika tombol delete maka ALert_Dialog_Delete akan muncul
             case R.id.mDelete:
                 showAlertDialog(ALERT_DIALOG_DELETE);
                 break;
-//            case R.id.mEdit:
-//
-//                break;
+//                jika tombol back maka alert_dialog_close akan muncul
             case android.R.id.home:
                 showAlertDialog(ALERT_DIALOG_CLOSE);
-//                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+//    fungsi untuk menampilkan dialog
     private void showAlertDialog(int type) {
         final boolean isDialogClose = type == ALERT_DIALOG_CLOSE;
         String dialogTitle, dialogMessage;
-
+//        jika isDialogClose, maka doalognya seperti di bawah:
         if (isDialogClose) {
             dialogTitle = getString(R.string.cancel);
             dialogMessage = getString(R.string.message_cancel);
-        } else {
+        } else {//jika selain isDialogClose, maka doalognya seperti di bawah:
             dialogMessage = getString(R.string.message_delete);
             dialogTitle = getString(R.string.delete);
         }
@@ -175,9 +176,10 @@ public class    DetailActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        //jika isDialogClose maka kita teredirect ke dashboar
                         if (isDialogClose) {
                             finish();
-                        } else {
+                        } else {//selain isDialogClose maka item akan di hapus
                             detailViewModel.delete(note);
 
                             Intent intent = new Intent();
