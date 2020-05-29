@@ -17,4 +17,6 @@
     <string name="changed">Satu item berhasil diubah</string>
     <string name="deleted">Satu item berhasil dihapus</string>
     <string name="search">Search</string>
+    <string name="btnTgl">Tanggal</string>
+    <string name="date_picker">Sampai</string>
 </resources>

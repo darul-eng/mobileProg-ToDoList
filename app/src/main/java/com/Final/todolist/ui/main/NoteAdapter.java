@@ -29,6 +29,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     NoteAdapter(Activity activity) {
         this.activity = activity;
+
     }
 
     void setListNotes(List<Note> listNotes) {
@@ -79,11 +80,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
             ArrayList<Note> filteredList = new ArrayList<>();
 
-            if(constraint.toString().isEmpty()){
+            filteredListNotes : if (constraint == null || constraint.length() == 0){
                 filteredList.addAll(listNotes);
-            }else{
+            }else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
                 for (Note note : listNotes){
-                    filteredList.add(note);
+                    if (note.getTitle().toLowerCase().contains(filterPattern)){
+                        filteredList.add(note);
+                    }
                 }
             }
 
@@ -110,6 +115,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             tvTitle = itemView.findViewById(R.id.tv_item_title);
             tvDescription = itemView.findViewById(R.id.tv_item_desc);
             tvDate = itemView.findViewById(R.id.tv_item_date);
+//            tv_item_datepicker = itemView.findViewById(R.id.tv_item_datepicker);
             cvNote = itemView.findViewById(R.id.cv_item_note);
         }
     }

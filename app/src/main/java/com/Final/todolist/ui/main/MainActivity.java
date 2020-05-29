@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.Final.todolist.R;
 import com.Final.todolist.ui.ViewModelFactory;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
+
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         MainViewModel mainViewModel = obtainViewModel(MainActivity.this);
         mainViewModel.getAllNotes().observe(this, noteObserver);
     }
+
     @NonNull
     private static MainViewModel obtainViewModel(AppCompatActivity activity){
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());

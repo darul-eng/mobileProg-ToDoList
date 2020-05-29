@@ -17,7 +17,10 @@ import android.widget.EditText;
 import com.Final.todolist.R;
 import com.Final.todolist.ui.ViewModelFactory;
 import com.Final.todolist.data.Note;
+import com.Final.todolist.ui.main.MainActivity;
 import com.Final.todolist.utils.DateHelper;
+import com.google.android.material.datepicker.MaterialCalendar;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
 public class    DetailActivity extends AppCompatActivity {
 
@@ -61,7 +64,6 @@ public class    DetailActivity extends AppCompatActivity {
         etTitle = findViewById(R.id.etTitle);
         etDesc = findViewById(R.id.etDesc);
         Button btnSave = findViewById(R.id.btnSave);
-
 
         note = getIntent().getParcelableExtra(EXTRA_NOTE);
         if (note != null){
